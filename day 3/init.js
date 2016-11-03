@@ -1,16 +1,36 @@
 var canvas = document.getElementById('playground')
 var mouse = {x:0,y:0}
 var PARTICULES = []
-
+var DISTORTION = 1;
 var POSITIONS = []
 
-for(var n=-100;n<=100;n=n+10) {
-  POSITIONS.push([n,random(-95,-105)])
+for(var n=-300;n<=0;n=n+10) {
+
+  var positionY = random(-190,-200);
+
+  var offset = 30
+  var rotation = (n / 2)
+
+  POSITIONS.push([n,random(-45,-55)])
+  POSITIONS.push([n-offset,random(45,55)])
+
+  POSITIONS.push([(positionY - 100 - rotation),n+offset+100])
+  POSITIONS.push([(positionY - rotation),n+offset+100])
 }
 
-for(var n=100;n>0;n=n-10) {
-  POSITIONS.push([n-15,n])
+
+var R = 70
+for(var n=0;n<=300;n=n+10) {
+  var radian = (300 + (n * Math.PI) / 280)
+  var arcPosition = {
+    x:50,
+    y:-90
+  }
+  POSITIONS.push([arcPosition.x + R * Math.cos(radian),(arcPosition.y) + R * Math.sin(radian)])
+  POSITIONS.push([arcPosition.x + R * Math.cos(radian),(arcPosition.y+140) + R * Math.sin(radian)])
+
 }
+
 
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
@@ -37,7 +57,7 @@ var position = {
 
 for(var x=0;x<POSITIONS.length;x++) {
     var particule = new Particule({
-      size:random(5,15),
+      size:random(1,15),
       ctx:ctx,
       x:position.x + POSITIONS[x][0],
       y:position.y + POSITIONS[x][1]
